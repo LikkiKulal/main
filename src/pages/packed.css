@@ -164,7 +164,7 @@
       border-radius: 8px;
       padding: 1rem;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      height: 850px;
+      height: 1050px;
       position: relative;
 
       .p3orders {
@@ -393,7 +393,7 @@
         border: 1px solid #ccc;
         padding: 20px;
         border-radius: 8px;
-        max-width: 400px;
+        max-width: 430px;
         /* margin: auto; */
       }
       .header {
@@ -419,34 +419,38 @@
       .info p {
         margin: 15px 0;
       }
-      .same {
+      
+      .contact {
+        display: flex;
+        align-items: center;
         gap: 10px;
-        display: flex; /* Use flexbox for layout */
-        align-items: center; /* Align items vertically in center */
       }
-
-      .text3,
-      .text4 {
-        display: flex; /* Use flexbox */
-        align-items: center; /* Align items vertically in center */
-        margin-bottom: 10px; /* Optional: Add margin-bottom for spacing */
+      
+      .text3, .text4 {
+        display: flex;
+        align-items: center;
       }
-
-      .text3 img,
-      .text4 img {
-        width: 10px; /* Adjust image width as needed */
-        height: 10px; /* Adjust image height as needed */
-        border-radius: 25px; /* Ensures the image appears in a circle */
-        background-color: #fff2f4; /* Sets background color inside the circle */
-
+      .text3::after {
+        content: '';
+        height: 20px; /* Adjust height as needed */
+        width: 1px;
+        background-color: #ccc; /* Choose your preferred color */
+        margin: 0 15px; /* Add some horizontal spacing */
+      }
+      .text3 img, .text4 img {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: #fff2f4;
         padding: 10px;
-        margin-right: 10px; /* Optional: Add margin-right for spacing between icon and text */
+        margin-right: 10px;
+      }
+      
+      .text3 span, .text4 span {
+        font-size: 16px;
       }
 
-      .text3 span,
-      .text4 span {
-        font-size: 16px; /* Optional: Adjust font size */
-      }
+     
 
       .timeline {
         list-style: none;
@@ -458,6 +462,7 @@
         align-items: center;
         margin-bottom: 20px;
         margin-top: 20px;
+        position: relative;
       }
       .timeline li .status {
         width: 150px;
@@ -472,6 +477,143 @@
         background-color: #45c676;
         border-radius: 50%;
         margin-right: 10px;
+        flex-shrink: 0; /* Prevents the icon from shrinking */
+      }
+      .line {
+        border: 1px dotted #bebebe; /* Use 'dotted' style for the border */
+        text-align: center;
+        /* width: 1px; */
+        height: 50px; /* Adjust line height as per your design */
+        /* background-color: #BEBEBE; */
+        position: absolute;
+        left: 4px; /* Adjust the position based on your design */
+        top: 0;
+        /* bottom: 0; */
+        margin: auto; /* Center the line vertically */
+    }
+    
+      .preparing-orders {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(415px, 1fr));
+        gap: 20px;
+      }
+
+      .prepare-order {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .order-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+      }
+
+      .order-id {
+        font-weight: 500;
+        font-size: 14px;
+        color: #ff69b4;
+      }
+
+      .order-date {
+        font-weight: 400;
+        font-size: 14px;
+        color: #030401;
+      }
+      .order-for {
+        margin-top: -15px;
+      }
+
+      .order-for h4 {
+        margin-bottom: 5px;
+      }
+
+      .contact-info {
+        gap: 20px;
+        display: flex; /* Use flexbox for layout */
+        align-items: center; /* Align items vertically in center */
+        border-bottom: 1px solid #ccc; /* Adds a bottom border */
+        padding-bottom: 10px; /* Adds some padding to ensure space between content and border */
+      }
+
+      .contact-info span {
+        display: flex;
+        align-items: center; /* Align text and image vertically center */
+        gap: 8px;
+        position: relative; /* Ensure the pseudo-element is positioned correctly */
+      }
+
+      .contact-info span:first-child::after {
+        content: "";
+        position: absolute;
+        right: -10px; /* Adjust to place the line between the two spans */
+        height: 20px; /* Height of the line */
+        width: 1px; /* Width of the line */
+        background-color: #ccc; /* Color of the line */
+      }
+      .contact-info img {
+        width: 20px; /* Set a width for the images */
+        height: 20px; /* Set a height for the images */
+        border-radius: 25px; /* Ensures the image appears in a circle */
+        background-color: #fff2f4; /* Sets background color inside the circle */
+
+        padding: 10px;
+        /* margin-right: 10px; */
+      }
+
+      .order-items {
+        margin-top: 15px;
+      }
+
+      .item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+      }
+      .item:not(:last-child) {
+        margin-bottom: 15px; /* Adds a gap between each item except the last one */
+      }
+
+      .item:last-child {
+        margin-top: 15px;
+
+        border-bottom: 1px solid #ccc; /* Adds a bottom border */
+        padding-bottom: 15px; /* Adds some padding to avoid the text being too close to the border */
+      }
+
+      .total-bill {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
+        font-weight: 500;
+        font-size: 14px;
+        border-bottom: 1px solid #ccc; /* Adds a bottom border */
+        padding-bottom: 10px; /* Adds some padding to ensure space between content and border */
+      }
+
+      .payment-method {
+        font-weight: 500;
+        font-size: 12px;
+        background-color: #ee46771a;
+        padding: 3px 5px;
+        border-radius: 3px;
+      }
+
+      .verify-pack-btn {
+        width: 100%;
+        background-color: #e0e0e0;
+        border: none;
+        border-radius: 4px;
+        padding: 10px;
+        margin-top: 15px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .verify-pack-btn:hover {
+        background-color: #d0d0d0;
       }
     }
   }

@@ -5,12 +5,10 @@ import './packed.css';
 function Assign() {
   const [showLogout, setShowLogout] = useState(false);
   const handleProfileClick = () => {
-    setShowLogout(!showLogout); // Toggle the showLogout state
+    setShowLogout(!showLogout);
   };
   const [activeTab, setActiveTab] = useState('transactions');
   const [selectedOrderId, setSelectedOrderId] = useState(null);
-
-
 
   const handleViewDetails = (orderId) => {
     setSelectedOrderId(selectedOrderId === orderId ? null : orderId);
@@ -35,7 +33,32 @@ function Assign() {
       paymentMethod: 'PAID - CASH'
     },
     {
+      id: 12345,
+      customerName: 'Rajesh Kannan',
+      phone: '+918526547512',
+      address: 'R S Puram, Coimbatore',
+      items: [{ name: 'Ooty apple', quantity: "1", price: 100 }, { name: 'White Egg', quantity: "5", price: 50 }],
+      total: 150,
+      status: 'preparing',
+      date: 'Apr 10, 2024',
+      paymentMethod: 'PAID - UPI'
+    },
+    {
+      id: 12346,
+      customerName: 'Rajesh Kannan',
+      phone: '+918526547512',
+      address: 'R S Puram, Coimbatore',
+      items: [{ name: 'Ooty apple', quantity: "1", price: 100 }, { name: 'White Egg', quantity: "5", price: 50 }],
+      total: 150,
+      status: 'preparing',
+      date: 'Apr 10, 2024',
+      paymentMethod: 'PAID - CASH'
+    },
+    {
       id: 12347,
+      customerName: 'Rajesh Kannan',
+      phone: '+918526547512',
+      address: 'R S Puram, Coimbatore',
       items: [{ name: 'Ooty apple', quantity: "1", price: 100 }, { name: 'White Egg', quantity: "5", price: 50 }],
       total: 150,
       status: 'preparing',
@@ -52,6 +75,9 @@ function Assign() {
     },
     {
       id: 12349,
+      customerName: 'Rajesh Kannan',
+      phone: '+918526547512',
+      address: 'R S Puram, Coimbatore',
       items: [{ name: 'Ooty apple', quantity: "1", price: 100 }, { name: 'White Egg', quantity: "5", price: 50 }],
       total: 150,
       status: 'preparing',
@@ -66,32 +92,20 @@ function Assign() {
       date: 'Apr 10, 2024',
       paymentMethod: 'PAID - PAYPAL'
     }
-
-
-
   ]);
-
-
-
-
 
   const orderCounts = {
     confirmation: 6,
-    preparing: 2,
+    preparing: 4,
     packed: 1,
     completed: 1
   };
-
-
-
-
 
   const handleReject = (orderId) => {
     setOrders(orders.map(order =>
       order.id === orderId ? { ...order, status: 'rejected' } : order
     ));
   };
-
 
   const handleConfirm = (orderId) => {
     setOrders(orders.map(order =>
@@ -103,10 +117,8 @@ function Assign() {
     setActiveOrderStatus(status);
   };
 
-
-
-
   const filteredOrders = orders.filter(order => order.status === activeOrderStatus);
+
   const OrderDetails = ({ order }) => {
     if (!order) return null;
 
@@ -129,6 +141,37 @@ function Assign() {
       </div>
     );
   };
+
+  const PrepareOrder = ({ order }) => (
+    <div className="prepare-order">
+      <div className="order-header">
+        <span className="order-id">Order Id: {order.id}</span>
+        <span className="order-date">Date: {order.date}</span>
+      </div>
+      <div className="order-for">
+        <h4>Order for:</h4>
+        <p>{order.customerName}</p>
+        <div className="contact-info">
+          <span><img src='/phone.svg' alt='' /> {order.phone}</span>
+          <span><img src='/location.svg' alt='' /> {order.address}</span>
+        </div>
+      </div>
+      <div className="order-items">
+        <h4>Order Items:</h4>
+        {order.items.map((item, index) => (
+          <div key={index} className="item">
+            <span>{item.quantity} x {item.name}</span>
+            <span>₹{item.price.toFixed(2)}</span>
+          </div>
+        ))}
+      </div>
+      <div className="total-bill">
+        <span>Total Bill Amount <span className="payment-method">{order.paymentMethod}</span></span>
+        <span>₹{order.total.toFixed(2)}</span>
+      </div>
+      <button className="verify-pack-btn">Verify & Pack Items</button>
+    </div>
+  );
 
   return (
     <div className="p1app">
@@ -156,7 +199,7 @@ function Assign() {
         <aside className="p2sidebar">
           <div className="p2store">
             <img src='/kanan.svg' alt='' className='img' />
-            <div class="text">Kannan departmental
+            <div className="text">Kannan departmental
               <img src='/down.svg' alt='' />
             </div>
           </div>
@@ -168,7 +211,6 @@ function Assign() {
                   <span className="dashboard-text">Dashboard</span>
                 </Link>
               </li>
-
               <li className="p3active">
                 <img src='/orders.svg' alt='' />
                 Orders
@@ -183,7 +225,6 @@ function Assign() {
               </li>
             </ul>
           </nav>
-
         </aside>
 
         <main className="p2dash">
@@ -194,13 +235,11 @@ function Assign() {
               <h3>Last Update at: June 02, 2024 | 11:25 PM</h3>
             </div>
             <div class='search-container'>
-            <div class='search'>
-  <img src="/search.svg" alt="" class="i" />   
-  <input type="text" placeholder="Search for order id or Customer Name" />
-</div>
-</div>
-
-
+              <div class='search'>
+                <img src="/search.svg" alt="" class="i" />
+                <input type="text" placeholder="Search for order id or Customer Name" />
+              </div>
+            </div>
             <div className="p4status">
               <span className={`p5status ${activeOrderStatus === 'confirmation' ? 'p5active' : ''}`}
                 onClick={() => handleStatusFilter('confirmation')}>
@@ -219,92 +258,102 @@ function Assign() {
                 Completed ({orderCounts.completed})
               </span>
             </div>
-            {filteredOrders.map(order => (
-              <div key={order.id}>
-                {order.status === 'packed' ? (
-                  <div className="container" key={`delivery-status-${order.id}`}>
-                    <div className="header">Ready for delivery:</div>
-                    <div className="order-id">Order Id: <span className='id'>{order.id}</span></div>
-                    <div className="info">
-                      <p>Rajesh Kannan</p>
-                      <div className='same'>
-                        <div className='text3'>
 
-                          <img src='/phone.svg' alt='' />
-                          <span>+918526547512</span>
-                        </div>
-                        <div className='text4'>
-                          <img src='/location.svg' alt='' />
-                          <span>R S Puram, Coimbatore</span>
-                        </div>
+            {activeOrderStatus === 'preparing' ? (
+              <div className="preparing-orders">
+                {filteredOrders.map(order => (
+                  <PrepareOrder key={order.id} order={order} />
+                ))}
+              </div>
+            ) : (
+              filteredOrders.map(order => (
+                <div key={order.id}>
+                  {order.status === 'packed' ? (
+                    <div className="container" key={`delivery-status-${order.id}`}>
+                      <div className="header">Ready for delivery:</div>
+                      <div className="order-id">Order Id: <span className='id'>{order.id}</span></div>
+                      <div className="info">
+                        <p>Rajesh Kannan</p>
+                        <div class="contact">
+  <div class="text3">
+    <img src="/phone.svg" alt="Phone" />
+    <span>+918526547512</span>
+  </div>
+  <div class="text4">
+    <img src="/location.svg" alt=" "/>
+    <span>R S Puram, Coimbatore</span>
+  </div>
+</div>
                       </div>
+                      <ul class="timeline">
+                        <li>
+                          <div class="icon2"></div>
+                          <div class="line"></div>
+                          <div class="status">Store Confirmation</div>
+                          <div class="date">Apr 09, 2024 | 02:00PM</div>
+                        </li>
+                        <li>
+                          <div class="icon2"></div>
+                          <div class="line"></div>
+                          <div class="status">Delivery Accepted</div>
+                          <div class="date">Apr 10, 2024 | 03:00PM</div>
+                        </li>
+                        <li>
+                          <div class="icon2"></div>
+                          <div class="status">Delivery Pickup</div>
+                          <div class="date">Apr 10, 2024 | 03:30PM</div>
+                        </li>
+                      </ul>
                     </div>
-                    <ul className="timeline">
-                      <li>
-                        <div className="icon2"></div>
-                        <div className="status">Store Confirmation</div>
-                        <div className="date">Apr 09, 2024 | 02:00PM</div>
-                      </li>
-                      <li>
-                        <div className="icon2"></div>
-                        <div className="status">Delivery Accepted</div>
-                        <div className="date">Apr 10, 2024 | 03:00PM</div>
-                      </li>
-                      <li>
-                        <div className="icon2"></div>
-                        <div className="status">Delivery Pickup</div>
-                        <div className="date">Apr 10, 2024 | 03:30PM</div>
-                      </li>
-                    </ul>
-                  </div>
-                ) : (
-                  <div className={`p4order ${order.status === 'preparing' ? 'no-border' : ''}`}>
-                    <div className="p5header">
-                      <span className="p6id">Order ID: {order.id}</span>
-                      <span className="p6date">Date: {order.date}</span>
-                    </div>
-                    <div className="p5items">
-                      <span>
-                        Order Items
-                        <img src='/up.svg' alt='' />
-                      </span>
-                      {order.items.map((item, index) => (
-                        <div key={index} className="p6item">
-                          <span>{item.quantity} x {item.name}</span>
-                          <span>₹{(item.price * item.quantity).toFixed()}</span>
-                        </div>
-                      ))}
-                    </div>
-                    {order.status !== 'preparing' && (
-                      <>
-                        <div className="p5total">
-                          <span>
-                            Total Bill Amount: <span className="payment-method">{order.paymentMethod}</span>
-                          </span>
-                          <span>₹{order.total.toFixed(2)}</span>
-                        </div>
-                        <span className="p5details" onClick={() => handleViewDetails(order.id)}>
-                          {selectedOrderId === order.id ? 'Hide details' : 'View full order details'}
-                          <img src='/side.svg' alt='' />
+                  ) : (
+                    <div className={`p4order ${order.status === 'preparing' ? 'no-border' : ''}`}>
+                      <div className="p5header">
+                        <span className="p6id">Order ID: {order.id}</span>
+                        <span className="p6date">Date: {order.date}</span>
+                      </div>
+                      <div className="p5items">
+                        <span>
+                          Order Items
+                          <img src='/up.svg' alt='' />
                         </span>
-                      </>
-                    )}
-                    <div className="p5actions">
-                      {order.status === 'confirmation' && (
+                        {order.items.map((item, index) => (
+                          <div key={index} className="p6item">
+                            <span>{item.quantity} x {item.name}</span>
+                            <span>₹{(item.price * item.quantity).toFixed()}</span>
+                          </div>
+                        ))}
+                      </div>
+                      {order.status !== 'preparing' && (
                         <>
-                          <button className="p6reject" onClick={() => handleReject(order.id)}>
-                            Reject Order
-                          </button>
-                          <button className="p6confirm" onClick={() => handleConfirm(order.id)}>
-                            Confirm Order
-                          </button>
+                          <div className="p5total">
+                            <span>
+                              Total Bill Amount: <span className="payment-method">{order.paymentMethod}</span>
+                            </span>
+                            <span>₹{order.total.toFixed(2)}</span>
+                          </div>
+                          <span className="p5details" onClick={() => handleViewDetails(order.id)}>
+                            {selectedOrderId === order.id ? 'Hide details' : 'View full order details'}
+                            <img src='/side.svg' alt='' />
+                          </span>
                         </>
                       )}
+                      <div className="p5actions">
+                        {order.status === 'confirmation' && (
+                          <>
+                            <button className="p6reject" onClick={() => handleReject(order.id)}>
+                              Reject Order
+                            </button>
+                            <button className="p6confirm" onClick={() => handleConfirm(order.id)}>
+                              Confirm Order
+                            </button>
+                          </>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
-            ))}
+                  )}
+                </div>
+              ))
+            )}
             <div className="order-details-container">
               <OrderDetails order={orders.find(order => order.id === selectedOrderId)} />
             </div>
